@@ -1,16 +1,17 @@
+import { NextPage } from 'next'
 import Head from 'next/head'
 
-import { Rubik } from 'next/font/google'
+import HomeTemplate from '~/components/templates/Home'
 
-const rubik = Rubik({ subsets: ['latin'] })
-
-export default function Home() {
+const Home: NextPage = () => {
   return (
-    <main className={`${rubik.className}`}>
+    <>
       <Head>
         <title>Home</title>
       </Head>
-      oi
-    </main>
+      <HomeTemplate />
+    </>
   )
 }
+
+export default Home
