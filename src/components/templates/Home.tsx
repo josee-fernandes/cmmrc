@@ -89,6 +89,11 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
         ) ?? textWrapper.innerHTML
     }
 
+    gsap.to('.main', {
+      zIndex: 0,
+      delay: 7,
+    })
+
     anime.timeline().add({
       targets: '.header .letter',
       opacity: [0, 1],
@@ -97,6 +102,23 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
       easing: 'easeOutExpo',
       duration: 2000,
       delay: (element, index) => 7000 + 40 * index,
+    })
+
+    gsap.to('.header', {
+      duration: 2,
+      xPercent: 0,
+      top: 0,
+      left: 0,
+      // scale: 0.47,
+      // transformOrigin: 'top left',
+      fontSize: '2vw',
+      ease: Expo.easeInOut,
+      delay: 8,
+    })
+    gsap.to('.header', {
+      duration: 1,
+      position: 'relative',
+      delay: 9,
     })
   }, [setAccessed])
 
@@ -124,16 +146,33 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
           </div>
         </>
       )}
-      <div
+      <div className="main relative w-full min-h-screen bg-zinc-900 text-white -z-[2]">
+        <nav className="relative w-full h-24 flex justify-between items-center px-4">
+          <div
+            className={`header absolute top-[40vh] left-1/2 -translate-x-1/2 flex ${raleway_900.className} text-[8vw]`}
+          >
+            CMMRC
+          </div>
+          <div>
+            <ul className="flex items-center gap-4">
+              <li>Menu</li>
+              <li>Menu</li>
+              <li>Menu</li>
+            </ul>
+          </div>
+        </nav>
+
+        {accessed && (
+          <>
+            <div className="h-screen">conteúdo</div>
+          </>
+        )}
+      </div>
+      {/* <div
         className={`header relative w-full min-h-screen bg-zinc-900 text-white flex justify-center items-center -z-[2] ${raleway_900.className} text-[8em]`}
       >
         CMMRC
-      </div>
-      {accessed && (
-        <>
-          <div className="h-screen bg-zinc-900 text-white">conteúdo</div>
-        </>
-      )}
+      </div> */}
     </div>
   )
 }
