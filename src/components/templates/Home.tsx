@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { Rubik, Poppins, Raleway } from 'next/font/google'
+import { Rubik, Raleway, Playfair_Display, Montserrat } from 'next/font/google'
+import Link from 'next/link'
 
 import { Expo, gsap } from 'gsap'
 import anime from 'animejs'
@@ -14,14 +15,27 @@ const rubik_400 = Rubik({
   subsets: ['latin'],
   weight: '900',
 })
-const poppins_900 = Poppins({
-  weight: '900',
-  subsets: ['latin'],
-})
+// const poppins_900 = Poppins({
+//   weight: '900',
+//   subsets: ['latin'],
+// })
 const raleway_900 = Raleway({
   subsets: ['latin'],
   display: 'swap',
   weight: '900',
+})
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+})
+const playfairDisplayItalic = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  style: 'italic',
+})
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
 })
 
 interface IHomeTemplate {}
@@ -30,6 +44,7 @@ const textLines = new Array<string>(11).fill('')
 
 const HomeTemplate: React.FC<IHomeTemplate> = () => {
   const [accessed, setAccessed] = useState(false)
+  const [menusReady, setMenusReady] = useState(false)
 
   const handleEnter = useCallback(() => {
     gsap.to('.btn', {
@@ -41,7 +56,7 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
 
     gsap.to('.text-wrapper > div', {
       duration: 1,
-      x: 500,
+      xPercent: 10,
       ease: Expo.easeInOut,
       delay: 1,
       stagger: 0.1,
@@ -109,18 +124,66 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
       xPercent: 0,
       top: 0,
       left: 0,
-      // scale: 0.47,
-      // transformOrigin: 'top left',
       fontSize: '2vw',
       ease: Expo.easeInOut,
       delay: 8,
+      clear: 'fontSize',
+      onComplete: () => {
+        gsap.set('.text-wrapper > div', {
+          clearProps: 'fontSize',
+        })
+      },
     })
     gsap.to('.header', {
       duration: 1,
       position: 'relative',
       delay: 9,
     })
+    gsap.to('.navbar', {
+      duration: 1,
+      justifyContent: 'space-between',
+      delay: 9,
+    })
   }, [setAccessed])
+
+  const handleMenus = useCallback(() => {
+    let elements = document.querySelectorAll('.rolling-text')
+
+    for (const element of elements ?? []) {
+      let innerText = (element as HTMLElement)?.innerText
+
+      if (innerText.includes('\n')) return
+
+      console.log({ element, innerText })
+      element.innerHTML = ''
+
+      let textContainer = document.createElement('div')
+      textContainer.classList.add('block')
+
+      for (let letter of innerText) {
+        let span = document.createElement('span')
+        span.innerText = letter.trim() === '' ? '\xa0' : letter
+        span.classList.add('menu-letter')
+
+        textContainer.appendChild(span)
+      }
+
+      element.appendChild(textContainer)
+      element.appendChild(textContainer.cloneNode(true))
+    }
+
+    for (const element of elements) {
+      element.addEventListener('mouseover', () => {
+        element.classList.remove('play')
+      })
+    }
+
+    setMenusReady(true)
+  }, [setMenusReady])
+
+  useEffect(() => {
+    if (!menusReady) handleMenus()
+  }, [menusReady, handleMenus])
 
   return (
     <div>
@@ -147,32 +210,40 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
         </>
       )}
       <div className="main relative w-full min-h-screen bg-zinc-900 text-white -z-[2]">
-        <nav className="relative w-full h-24 flex justify-between items-center px-4">
+        <nav className="navbar relative w-full h-24 flex justify-end items-center px-4">
           <div
-            className={`header absolute top-[40vh] left-1/2 -translate-x-1/2 flex ${raleway_900.className} text-[8vw]`}
+            className={`header absolute top-[40vh] left-1/2 -translate-x-1/2 flex ${raleway_900.className} !sm:text-base text-[8vw]`}
           >
             CMMRC
           </div>
-          <div>
+          <div className="justify-self-end flex">
             <ul className="flex items-center gap-4">
-              <li>Menu</li>
-              <li>Menu</li>
-              <li>Menu</li>
+              <li>
+                <Link
+                  href="/"
+                  className={`rolling-text inline-block ${montserrat.className} overflow-hidden text-white`}
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  className={`rolling-text inline-block ${montserrat.className} overflow-hidden text-white`}
+                >
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
         </nav>
 
         {accessed && (
           <>
-            <div className="h-screen">conteúdo</div>
+            <div className="h-screen border-2 border-red-500">conteúdo</div>
           </>
         )}
       </div>
-      {/* <div
-        className={`header relative w-full min-h-screen bg-zinc-900 text-white flex justify-center items-center -z-[2] ${raleway_900.className} text-[8em]`}
-      >
-        CMMRC
-      </div> */}
     </div>
   )
 }
