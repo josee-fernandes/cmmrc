@@ -214,7 +214,7 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
         </>
       )}
       <div className="main relative w-full min-h-screen bg-zinc-900 text-white -z-[2]">
-        <nav className="navbar relative w-full h-24 flex justify-end items-center px-4">
+        <nav className="navbar fixed w-full h-24 flex justify-end items-center px-4 z-[1]">
           <div
             className={`header absolute top-[40vh] left-1/2 -translate-x-1/2 flex ${raleway_900.className} !sm:text-base text-[8vw]`}
           >

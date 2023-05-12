@@ -2,13 +2,33 @@ import React, { useRef } from 'react'
 import { easing } from 'maath'
 import { useFrame } from '@react-three/fiber'
 import { AccumulativeShadows, RandomizedLight } from '@react-three/drei'
+import { ReactThreeFiber } from '@react-three/fiber'
 
-import { AccumulativeContext } from 'node_modules/@react-three/drei/core/AccumulativeShadows'
+type TCSoftShadowMaterialProps = {
+  map: THREE.Texture
+  color?: ReactThreeFiber.Color
+  alphaTest?: number
+  blend?: number
+}
+
+interface ICAccumnulativeContext {
+  lights: Map<any, any>
+  temporal: boolean
+  frames: number
+  blend: number
+  count: number
+  getMesh: () => THREE.Mesh<
+    THREE.PlaneGeometry,
+    TCSoftShadowMaterialProps & THREE.ShaderMaterial
+  >
+  reset: () => void
+  update: (frames?: number) => void
+}
 
 interface IBackdrop {}
 
 export const Backdrop: React.FC<JSX.IntrinsicElements['group']> = ({}) => {
-  const shadows = useRef<AccumulativeContext>(null)
+  const shadows = useRef<ICAccumnulativeContext>(null)
 
   return (
     <AccumulativeShadows

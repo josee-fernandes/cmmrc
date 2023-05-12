@@ -23,13 +23,13 @@ export const Content: React.FC = () => {
     <AnimatePresence>
       {snap.intro && (
         <motion.section className="home" {...slideAnimation('left')}>
-          <motion.header {...slideAnimation('down')}>
+          {/* <motion.header {...slideAnimation('down')}>
             <Image
               src={threeJSLogo}
               alt="ThreeJS"
               className="w-8 h-8 object-contain"
             />
-          </motion.header>
+          </motion.header> */}
 
           <motion.div className="home-content" {...headTextAnimation}>
             <h1 className="head-text">
