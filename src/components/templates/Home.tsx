@@ -1,6 +1,6 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
-import { Rubik, Raleway, Playfair_Display, Montserrat } from 'next/font/google'
+import { Rubik, Raleway, Montserrat } from 'next/font/google'
 import Link from 'next/link'
 
 import { Expo, gsap } from 'gsap'
@@ -9,36 +9,16 @@ import anime from 'animejs'
 import { useSnapshot } from 'valtio'
 import state from '~/store'
 
-import { Customizer } from '../Customizer'
-import { Content } from '../Content'
 import { Main3D } from '../Main3D'
 
-// Castoro Titling -> times
-// Nosifer -> blood
-// Abril_Fatface
-
-// If loading a variable font, you don't need to specify the font weight
 const rubik_400 = Rubik({
   subsets: ['latin'],
   weight: '900',
 })
-// const poppins_900 = Poppins({
-//   weight: '900',
-//   subsets: ['latin'],
-// })
 const raleway_900 = Raleway({
   subsets: ['latin'],
   display: 'swap',
   weight: '900',
-})
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  display: 'swap',
-})
-const playfairDisplayItalic = Playfair_Display({
-  subsets: ['latin'],
-  display: 'swap',
-  style: 'italic',
 })
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -50,10 +30,11 @@ interface IHomeTemplate {}
 const textLines = new Array<string>(11).fill('')
 
 const HomeTemplate: React.FC<IHomeTemplate> = () => {
-  const snap = useSnapshot(state)
-
   const [accessed, setAccessed] = useState(false)
   const [menusReady, setMenusReady] = useState(false)
+  const [screenView, setScreenView] = useState('desktop')
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleEnter = useCallback(() => {
     gsap.to('.btn', {
@@ -151,6 +132,14 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
         delay: 9,
       })
       .then(() => setAccessed(true))
+    gsap.to('.nav-menus', {
+      duration: 3,
+      top: 0,
+      opacity: 1,
+      ease: Expo.easeInOut,
+      delay: 9,
+      stagger: 0.1,
+    })
   }, [setAccessed])
 
   const handleMenus = useCallback(() => {
@@ -192,9 +181,45 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
     setMenusReady(true)
   }, [setMenusReady])
 
+  const handleScreenWidth = useCallback(() => {
+    setScreenView((oldScreenView) => {
+      const newScreenView =
+        window.innerWidth <= 600
+          ? 'mobile'
+          : window.innerWidth <= 1260
+          ? 'tablet'
+          : 'desktop'
+
+      return oldScreenView !== newScreenView ? newScreenView : oldScreenView
+    })
+  }, [setScreenView])
+
+  const handleToggleMenu = () => {
+    console.log('toggle', isMenuOpen ? '-100%' : '-50%')
+
+    gsap.to('.mobile-menu', {
+      duration: 1,
+      right: isMenuOpen ? '-100%' : '-50%',
+      ease: Expo.easeInOut,
+    })
+    setIsMenuOpen((oldIsMenuOpen) => !oldIsMenuOpen)
+  }
+
+  useEffect(() => {
+    setMenusReady(false)
+
+    console.log('screenView', screenView)
+  }, [screenView, setMenusReady])
+
   useEffect(() => {
     if (!menusReady) handleMenus()
   }, [menusReady, handleMenus])
+
+  useEffect(() => {
+    window.addEventListener('resize', handleScreenWidth)
+
+    return () => window.removeEventListener('resize', handleScreenWidth)
+  }, [handleScreenWidth])
 
   return (
     <div>
@@ -228,31 +253,72 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
         <nav className="navbar fixed w-full h-24 flex justify-end items-center px-4 z-[1]">
           <div
             className={`header absolute top-[40vh] left-1/2 -translate-x-1/2 flex ${raleway_900.className} !sm:text-base text-[8vw]`}
+            style={
+              screenView === 'mobile'
+                ? { fontSize: '1.5rem' }
+                : screenView === 'tablet'
+                ? { fontSize: '4vw' }
+                : { fontSize: '2vw' }
+            }
           >
             CMMRC.
           </div>
           <div className="justify-self-end flex">
-            <ul className="flex items-center gap-4">
-              <li>
+            <ul
+              className="relative flex items-center gap-4 overflow-hidden"
+              style={
+                screenView === 'mobile'
+                  ? { fontSize: '1.5rem' }
+                  : screenView === 'tablet'
+                  ? { fontSize: '3.5vw' }
+                  : { fontSize: '2vw' }
+              }
+            >
+              <li
+                className="nav-menus top-[10vh] opacity-0 relative"
+                // style={{ display: screenView === 'mobile' ? 'none' : 'block' }}
+              >
                 <Link
                   href="https://github.com/josee-fernandes/cmmrc"
                   target="_blank"
                   rel="noopener,noreferrer"
                   className={`rolling-text inline-block ${montserrat.className} overflow-hidden`}
-                  style={{ color: state.color }}
+                  style={{
+                    color: state.color,
+                  }}
                 >
                   GitHub
                 </Link>
               </li>
-              <li>
-                <a
+              <li
+                className="nav-menus top-[10vh] opacity-0 relative"
+                // style={{ display: screenView === 'mobile' ? 'none' : 'block' }}
+              >
+                <Link
                   href="#contact"
                   className={`rolling-text inline-block ${montserrat.className} overflow-hidden`}
                   style={{ color: state.color }}
                 >
                   Contato
-                </a>
+                </Link>
               </li>
+              {/* <li className="nav-menus top-[10vh] opacity-0 relative">
+                <div
+                  className={`${montserrat.className} overflow-hidden cursor-pointer`}
+                  onClick={handleToggleMenu}
+                >
+                  <div className="rounded-full shadow-md w-6 h-6 md:w-[2vw] md:h-[2vw] bg-black flex justify-center items-center gap-1">
+                    <div
+                      className="rounded-full w-1.5 h-1.5 md:w-[0.4vw] md:h-[0.4vw]"
+                      style={{ backgroundColor: state.color }}
+                    ></div>
+                    <div
+                      className="rounded-full w-1.5 h-1.5 md:w-[0.4vw] md:h-[0.4vw]"
+                      style={{ backgroundColor: state.color }}
+                    ></div>
+                  </div>
+                </div>
+              </li> */}
             </ul>
           </div>
         </nav>

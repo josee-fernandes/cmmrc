@@ -7,7 +7,7 @@ body {
 }
 
 .rolling-text {
-  @apply text-[2vw] leading-[2vw] h-[2vw] md:text-[1.6vw] md:leading-[1.6vw] md:h-[1.6vw] font-black;
+  @apply text-base leading-4 h-4 md:text-[2vw] md:leading-[2vw] md:h-[2vw] xl:text-[1.6vw] xl:leading-[1.6vw] xl:h-[1.6vw] font-black;
 
   text-decoration: none;
   /* font-size: 1.6vw;
