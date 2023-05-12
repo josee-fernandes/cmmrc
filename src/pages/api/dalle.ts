@@ -42,7 +42,7 @@ export default async function handler(
 
   if (req.method === 'GET') {
     // Rest of the API logic
-    res.json({ message: 'Hello Everyone!' })
+    res.json({ message: 'Hello DallE!' })
   } else if (req.method === 'POST') {
     try {
       const { prompt } = req.body
