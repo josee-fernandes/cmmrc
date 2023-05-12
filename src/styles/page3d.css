@@ -20,7 +20,7 @@ html {
 }
 
 .home {
-  @apply w-fit xl:h-1/2 flex xl:justify-between xl:items-start justify-center items-center flex-col xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-2 absolute z-10 top-1/2 !-translate-y-1/2 left-1/2 xl:left-0 !-translate-x-1/2 xl:!translate-x-0 backdrop-blur-lg xl:backdrop-blur-0 text-center xl:text-left rounded-lg xl:shadow-2xl;
+  @apply w-fit max-w-[50vw] xl:h-1/2 flex xl:justify-between xl:items-start justify-center items-center flex-col xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-2 absolute z-10 top-1/2 !-translate-y-1/2 left-1/2 xl:left-0 !-translate-x-1/2 xl:!translate-x-0 backdrop-blur-lg xl:backdrop-blur-0 text-center xl:text-left rounded-lg shadow-2xl xl:shadow-none;
 }
 
 .home-content {

@@ -1,10 +1,13 @@
-import { useCallback, useEffect, useState } from 'react'
+import React, { ReactElement, useCallback, useEffect, useState } from 'react'
 
 import { Rubik, Raleway, Playfair_Display, Montserrat } from 'next/font/google'
 import Link from 'next/link'
 
 import { Expo, gsap } from 'gsap'
 import anime from 'animejs'
+
+import { useSnapshot } from 'valtio'
+import state from '~/store'
 
 import { Customizer } from '../Customizer'
 import { Content } from '../Content'
@@ -47,6 +50,8 @@ interface IHomeTemplate {}
 const textLines = new Array<string>(11).fill('')
 
 const HomeTemplate: React.FC<IHomeTemplate> = () => {
+  const snap = useSnapshot(state)
+
   const [accessed, setAccessed] = useState(false)
   const [menusReady, setMenusReady] = useState(false)
 
@@ -172,8 +177,12 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
         textContainer.appendChild(span)
       }
 
+      const clone = textContainer.cloneNode(true)
+
+      textContainer.classList.add('!text-black')
+
       element.appendChild(textContainer)
-      element.appendChild(textContainer.cloneNode(true))
+      element.appendChild(clone)
     }
 
     for (const element of elements) {
@@ -199,7 +208,10 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
           >
             Enter
           </button>
-          <div className="text-container fixed w-full h-screen bg-orange-600 -z-[1]"></div>
+          <div
+            className="text-container fixed w-full h-screen -z-[1]"
+            style={{ backgroundColor: state.color }}
+          ></div>
           <div className="text-wrapper fixed w-full h-screen -left-1/2 flex flex-col justify-between cursor-default">
             {textLines?.map((_, index) => (
               <div
@@ -213,7 +225,7 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
           </div>
         </>
       )}
-      <div className="main relative w-full min-h-screen bg-zinc-900 text-white -z-[2]">
+      <div className="main relative w-full min-h-screen bg-zinc-50 text-black -z-[2]">
         <nav className="navbar fixed w-full h-24 flex justify-end items-center px-4 z-[1]">
           <div
             className={`header absolute top-[40vh] left-1/2 -translate-x-1/2 flex ${raleway_900.className} !sm:text-base text-[8vw]`}
@@ -224,18 +236,22 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
             <ul className="flex items-center gap-4">
               <li>
                 <Link
-                  href="/"
-                  className={`rolling-text inline-block ${montserrat.className} overflow-hidden text-white`}
+                  href="https://github.com/josee-fernandes/cmmrc"
+                  target="_blank"
+                  rel="noopener,noreferrer"
+                  className={`rolling-text inline-block ${montserrat.className} overflow-hidden`}
+                  style={{ color: state.color }}
                 >
-                  Home
+                  GitHub
                 </Link>
               </li>
               <li>
                 <a
                   href="#contact"
-                  className={`rolling-text inline-block ${montserrat.className} overflow-hidden text-white`}
+                  className={`rolling-text inline-block ${montserrat.className} overflow-hidden`}
+                  style={{ color: state.color }}
                 >
-                  Contact
+                  Contato
                 </a>
               </li>
             </ul>

@@ -7,7 +7,7 @@ body {
 }
 
 .rolling-text {
-  @apply text-base leading-4 h-4 md:text-[1.6vw] md:leading-[1.6vw] md:h-[1.6vw];
+  @apply text-[2vw] leading-[2vw] h-[2vw] md:text-[1.6vw] md:leading-[1.6vw] md:h-[1.6vw] font-black;
 
   text-decoration: none;
   /* font-size: 1.6vw;
@@ -21,7 +21,7 @@ body {
 }
 
 .rolling-text .block:last-child {
-  @apply text-red-500 flex justify-between;
+  @apply flex justify-between font-light;
 
   font-family: '__Playfair_Display_d1d909', '__Playfair_Display_Fallback_d1d909';
   font-style: italic;

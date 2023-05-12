@@ -43,7 +43,7 @@ export const Backdrop: React.FC<JSX.IntrinsicElements['group']> = ({}) => {
       <RandomizedLight
         amount={4}
         radius={9}
-        intensity={0.55}
+        intensity={0.7}
         ambient={0.25}
         position={[5, 5, -10]}
       />
@@ -51,7 +51,7 @@ export const Backdrop: React.FC<JSX.IntrinsicElements['group']> = ({}) => {
         amount={4}
         radius={5}
         intensity={0.25}
-        ambient={0.55}
+        ambient={0.7}
         position={[-5, 5, -9]}
       />
     </AccumulativeShadows>

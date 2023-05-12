@@ -23,10 +23,10 @@ export const FilePicker: React.FC<IFilePicker> = ({
           }}
         />
         <label htmlFor="file-upload" className="filepicker-label">
-          Upload File
+          Enviar imagem
         </label>
         <p className="mt-2 text-gray-500 text-xs truncate">
-          {file === null ? 'No file seleected' : file.name}
+          {file === null ? 'Imagem não selecionada.' : file.name}
         </p>
       </div>
 
