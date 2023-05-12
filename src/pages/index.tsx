@@ -7,7 +7,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>CMMRC. - IHC</title>
       </Head>
       <HomeTemplate />
     </>
