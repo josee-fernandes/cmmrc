@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { useRouter } from 'next/router'
+
 import config from '~/config/config'
 
 import { motion, AnimatePresence } from 'framer-motion'
@@ -20,6 +22,8 @@ import { Tab } from './Tab'
 import { CanvasModel } from './canvas'
 
 export const Customizer: React.FC = () => {
+  const router = useRouter()
+
   const snap = useSnapshot(state)
 
   const [file, setFile] = useState<Blob | null>(null)
@@ -32,39 +36,6 @@ export const Customizer: React.FC = () => {
     logoShirt: true,
     stylishShirt: false,
   })
-
-  const handleSubmit = async (type: any) => {
-    if (!prompt) return alert('Please enter a prompt')
-
-    try {
-      // call backend to generate ai image
-    } catch (error) {
-      alert(error)
-    } finally {
-      setGeneratingImage(false)
-      setActiveEditorTab('')
-    }
-  }
-
-  // show tab content depending on the activeTab
-  const generateTabContent = () => {
-    switch (activeEditorTab) {
-      case 'colorpicker':
-        return <ColorPicker />
-      case 'filepicker':
-        return <FilePicker file={file} setFile={setFile} readFile={readFile} />
-      case 'aipicker':
-        return (
-          <AIPicker
-            prompt={prompt}
-            generatingImage={generatingImage}
-            handleSubmit={handleSubmit}
-          />
-        )
-      default:
-        return <></>
-    }
-  }
 
   const handleActiveFilterTab = (tabName: string) => {
     switch (tabName) {
@@ -97,6 +68,52 @@ export const Customizer: React.FC = () => {
 
     if (!activeFilterTab[decalType.filterTab as 'logoShirt' | 'stylishShirt']) {
       handleActiveFilterTab(decalType.filterTab)
+    }
+  }
+
+  const handleSubmit = async (type: 'logo' | 'full') => {
+    if (!prompt) return alert('Please enter a prompt')
+
+    try {
+      setGeneratingImage(true)
+
+      const response = await fetch(`/api/dalle`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      })
+
+      const data = await response.json()
+
+      handleDecals(type, `data:image/png;base64,${data.photo}`)
+    } catch (error) {
+      alert(error)
+    } finally {
+      setGeneratingImage(false)
+      setActiveEditorTab('')
+    }
+  }
+
+  // show tab content depending on the activeTab
+  const generateTabContent = () => {
+    switch (activeEditorTab) {
+      case 'colorpicker':
+        return <ColorPicker />
+      case 'filepicker':
+        return <FilePicker file={file} setFile={setFile} readFile={readFile} />
+      case 'aipicker':
+        return (
+          <AIPicker
+            prompt={prompt}
+            setPrompt={setPrompt}
+            generatingImage={generatingImage}
+            handleSubmit={handleSubmit}
+          />
+        )
+      default:
+        return <></>
     }
   }
 
@@ -137,7 +154,7 @@ export const Customizer: React.FC = () => {
             <CustomButton
               type="filled"
               title="Go back"
-              handleCLick={() => (state.intro = true)}
+              handleClick={() => (state.intro = true)}
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
             />
           </motion.div>

@@ -34,13 +34,13 @@ export const FilePicker: React.FC<IFilePicker> = ({
         <CustomButton
           type="outline"
           title="Logo"
-          handleCLick={() => readFile('logo')}
+          handleClick={() => readFile('logo')}
           customStyles="text-xs"
         />
         <CustomButton
           type="filled"
           title="Full"
-          handleCLick={() => readFile('full')}
+          handleClick={() => readFile('full')}
           customStyles="text-xs"
         />
       </div>

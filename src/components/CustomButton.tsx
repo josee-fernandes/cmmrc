@@ -6,7 +6,7 @@ import { getContrastingColor } from '~/config/helpers'
 interface ICustomButton {
   type: string
   title: string
-  handleCLick: () => void
+  handleClick?: () => void
   customStyles: string
 }
 
@@ -14,7 +14,7 @@ export const CustomButton: React.FC<ICustomButton> = ({
   type,
   title,
   customStyles,
-  handleCLick,
+  handleClick,
 }) => {
   const snap = useSnapshot(state)
 
@@ -37,7 +37,7 @@ export const CustomButton: React.FC<ICustomButton> = ({
     <button
       className={`px-2 py-1.5 flex-1 rounded-md ${customStyles}`}
       style={generateStyle(type)}
-      onClick={handleCLick}
+      onClick={handleClick}
     >
       {title}
     </button>
