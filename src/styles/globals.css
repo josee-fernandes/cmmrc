@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply overflow-x-hidden;
+}
+
 .rolling-text {
   @apply text-base leading-4 h-4 md:text-[1.6vw] md:leading-[1.6vw] md:h-[1.6vw];
 

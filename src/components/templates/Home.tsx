@@ -6,6 +6,10 @@ import Link from 'next/link'
 import { Expo, gsap } from 'gsap'
 import anime from 'animejs'
 
+import { Customizer } from '../Customizer'
+import { Content } from '../Content'
+import { Main3D } from '../Main3D'
+
 // Castoro Titling -> times
 // Nosifer -> blood
 // Abril_Fatface
@@ -86,14 +90,12 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
       stagger: 0.05,
     })
 
-    gsap
-      .to('.text-container', {
-        duration: 2,
-        bottom: '-100%',
-        ease: Expo.easeInOut,
-        delay: 6,
-      })
-      .then(() => setAccessed(true))
+    gsap.to('.text-container', {
+      duration: 2,
+      bottom: '-100%',
+      ease: Expo.easeInOut,
+      delay: 6,
+    })
 
     let textWrapper = document.querySelector('.header')
     if (textWrapper?.innerHTML) {
@@ -139,11 +141,13 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
       position: 'relative',
       delay: 9,
     })
-    gsap.to('.navbar', {
-      duration: 1,
-      justifyContent: 'space-between',
-      delay: 9,
-    })
+    gsap
+      .to('.navbar', {
+        duration: 1,
+        justifyContent: 'space-between',
+        delay: 9,
+      })
+      .then(() => setAccessed(true))
   }, [setAccessed])
 
   const handleMenus = useCallback(() => {
@@ -238,11 +242,7 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
           </div>
         </nav>
 
-        {accessed && (
-          <>
-            <div className="h-screen border-2 border-red-500">conteúdo</div>
-          </>
-        )}
+        {accessed && <Main3D />}
       </div>
     </div>
   )
