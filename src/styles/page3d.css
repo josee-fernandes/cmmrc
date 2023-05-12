@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap');
-@import url('https://rsms.me/inter/inter.css');
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap'); */
+/* @import url('https://rsms.me/inter/inter.css'); */
 
 @tailwind base;
 @tailwind components;
@@ -9,26 +9,26 @@ html {
   font-family: 'Inter', sans-serif;
 }
 
-@supports (font-variation-settings: normal) {
+/* @supports (font-variation-settings: normal) {
   html {
     font-family: 'Inter var', sans-serif;
   }
-}
+} */
 
 .app {
   @apply relative w-full h-screen overflow-hidden;
 }
 
 .home {
-  @apply w-fit xl:h-full flex xl:justify-between justify-start items-start flex-col xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-7 absolute z-10;
+  @apply w-fit xl:h-1/2 flex xl:justify-between xl:items-start justify-center items-center flex-col xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-2 absolute z-10 top-1/2 !-translate-y-1/2 left-1/2 xl:left-0 !-translate-x-1/2 xl:!translate-x-0 backdrop-blur-lg xl:backdrop-blur-0 text-center xl:text-left rounded-lg xl:shadow-2xl;
 }
 
 .home-content {
-  @apply flex-1 xl:justify-center justify-start flex flex-col gap-10;
+  @apply xl:justify-center justify-start flex flex-col gap-10;
 }
 
 .head-text {
-  @apply xl:text-[10rem] text-[6rem] xl:leading-[11rem] leading-[7rem] font-black;
+  @apply text-[8vw] leading-[8vw] font-black;
 }
 
 .download-btn {

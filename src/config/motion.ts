@@ -1,4 +1,4 @@
-export const transition = { type: 'spring', duration: 0.8 }
+export const transition = { type: 'tween', duration: 0.8 }
 
 export const slideAnimation = (direction: 'left' | 'right' | 'up' | 'down') => {
   return {
