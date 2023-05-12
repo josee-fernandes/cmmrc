@@ -7,6 +7,8 @@ import {
   slideAnimation,
 } from '~/config/motion'
 
+import { Rubik, Raleway, Playfair_Display, Montserrat } from 'next/font/google'
+
 import { motion, AnimatePresence } from 'framer-motion'
 import state from '~/store'
 
@@ -14,7 +16,15 @@ import { useSnapshot } from 'valtio'
 
 import { CustomButton } from './CustomButton'
 
-import threeJSLogo from 'public/threejs.png'
+const playfairDisplayItalic = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  style: 'italic',
+})
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const Content: React.FC = () => {
   const snap = useSnapshot(state)
@@ -25,13 +35,17 @@ export const Content: React.FC = () => {
         <motion.section className="home" {...slideAnimation('left')}>
           <motion.div className="home-content" {...headContainerAnimation}>
             <motion.div {...headTextAnimation}>
-              <h1 className="head-text">Lorem, ipsum.</h1>
+              <h1 className={`head-text ${playfairDisplayItalic.className}`}>
+                Lorem, ipsum.
+              </h1>
             </motion.div>
             <motion.div
               className="flex flex-col gap-5 items-center xl:items-start"
               {...headContentAnimation}
             >
-              <p className="max-w-md font-normal text-base">
+              <p
+                className={`max-w-md font-normal text-base ${montserrat.className}`}
+              >
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
                 dolores aliquid dolor <strong>blanditiis labore veniam</strong>{' '}
                 ea atque in commodi nisi?

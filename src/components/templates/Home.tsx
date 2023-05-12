@@ -62,6 +62,10 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
       y: -40,
       ease: Expo.easeInOut,
     })
+    gsap.to('.btn', {
+      duration: 1,
+      display: 'none',
+    })
 
     gsap.to('.text-wrapper > div', {
       duration: 1,
@@ -73,7 +77,7 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
 
     gsap.to('.text-wrapper', {
       duration: 3,
-      y: -600,
+      yPercent: -50,
       scale: 4.5,
       rotate: -90,
       ease: Expo.easeInOut,
@@ -89,10 +93,10 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
 
     gsap.to('.text-wrapper > div', {
       duration: 4,
-      x: -7000,
+      xPercent: -200,
       ease: Expo.easeInOut,
       delay: 3.5,
-      stagger: 0.05,
+      stagger: 0.1,
     })
 
     gsap.to('.text-container', {
@@ -134,12 +138,6 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
       fontSize: '2vw',
       ease: Expo.easeInOut,
       delay: 8,
-      clear: 'fontSize',
-      onComplete: () => {
-        gsap.set('.text-wrapper > div', {
-          clearProps: 'fontSize',
-        })
-      },
     })
     gsap.to('.header', {
       duration: 1,
@@ -206,7 +204,7 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
             className={`btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[2] bg-none border-none outline-none ${rubik_400.className} font-light underline uppercase text-[2em] cursor-pointer`}
             onClick={handleEnter}
           >
-            Enter
+            Entrar
           </button>
           <div
             className="text-container fixed w-full h-screen -z-[1]"
@@ -216,10 +214,11 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
             {textLines?.map((_, index) => (
               <div
                 key={`line-${index}`}
-                className={`text w-[300%] ${rubik_400.className} text-[5vw] uppercase opacity-[0.1] whitespace-nowrap`}
+                className={`text w-[300%] ${rubik_400.className} text-[10vw] xl:text-[5vw] leading-[10vw] xl:leading-[5vw] h-[10vw] xl:h-[5vw] uppercase opacity-[0.1] whitespace-nowrap`}
               >
-                It is nice to be cool, but it&apos;s more cool to be nice It is
-                nice to be cool, but it&apos;s more cool to be nice
+                {/* It is nice to be cool, but it&apos;s more cool to be nice It is
+                nice to be cool, but it&apos;s more cool to be nice */}
+                CMMRC CMMRC CMMRC CMMRC CMMRC CMMRC CMMRC CMMRC CMMRC CMMRC
               </div>
             ))}
           </div>
@@ -230,7 +229,7 @@ const HomeTemplate: React.FC<IHomeTemplate> = () => {
           <div
             className={`header absolute top-[40vh] left-1/2 -translate-x-1/2 flex ${raleway_900.className} !sm:text-base text-[8vw]`}
           >
-            CMMRC
+            CMMRC.
           </div>
           <div className="justify-self-end flex">
             <ul className="flex items-center gap-4">
